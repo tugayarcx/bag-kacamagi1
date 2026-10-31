@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Bağ Kaçamağı Daveti</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@400;500&display=swap">
+<style>
+/* Layout: one narrow column like a folded invitation card; plan, then a short reply form. Single dark look by choice, matching the printed coupon. */
+:root{
+  --bg:#3A0F1A; --panel:#45151F; --ink:#F4EAD5; --muted:#D9C9A8; --gold:#C9A86A; --line:rgba(201,168,106,.35);
+  --display:'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --body:'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:40px 64px}
+.wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+.eyebrow{margin:0;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+h1{margin:0;font-family:var(--display);font-weight:500;font-size:clamp(46px,12vw,68px);line-height:1;text-wrap:balance}
+h1 em{font-weight:500}
+.sub{margin:0;color:var(--muted)}
+header{display:flex;flex-direction:column;gap:14px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.for{margin:0;font-family:var(--display);font-size:24px;font-style:italic;color:var(--ink)}
+h2{margin:0;font-family:var(--display);font-weight:500;font-size:30px;line-height:1.1}
+ol.plan{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+ol.plan li{display:grid;grid-template-columns:118px minmax(0,1fr);gap:16px;padding:14px 0;border-top:1px solid var(--line)}
+ol.plan li:last-child{border-bottom:1px solid var(--line)}
+.when{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);padding-top:4px}
+.what{font-family:var(--display);font-size:22px;line-height:1.2}
+.what small{display:block;font-family:var(--body);font-size:14px;color:var(--muted);margin-top:2px}
+section{display:flex;flex-direction:column;gap:18px}
+form{display:flex;flex-direction:column;gap:24px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:28px clamp(18px,5vw,28px)}
+fieldset{border:0;margin:0;padding:0;min-width:0;display:flex;flex-direction:column;gap:10px}
+.field,.choice{min-width:0}
+legend,label.lbl{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);padding:0;margin-bottom:10px}
+label.lbl{margin-bottom:0}
+.field{display:flex;flex-direction:column;gap:8px}
+.choice{display:flex;flex-wrap:wrap;gap:10px}
+.choice label{flex:1 1 180px;min-width:0;display:flex;align-items:center;gap:12px;min-height:54px;padding:14px 18px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:16px;line-height:1.3}
+.choice input{accent-color:var(--gold);width:18px;height:18px}
+.choice label:has(input:checked){border-color:var(--gold);background:rgba(201,168,106,.12)}
+input[type=date],textarea{-webkit-appearance:none;appearance:none;display:block;box-sizing:border-box;font:inherit;line-height:1.3;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px 18px;min-height:54px;width:100%;max-width:100%;margin:0;text-align:left}
+input[type=date]::-webkit-date-and-time-value{text-align:left;margin:0}
+input[type=date]::-webkit-calendar-picker-indicator{filter:invert(.85) sepia(.4);opacity:.8}
+textarea{min-height:110px;resize:vertical}
+input:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible,.choice label:has(input:focus-visible){outline:2px solid var(--gold);outline-offset:2px}
+.hint{margin:0;font-size:13px;color:var(--muted)}
+.err{margin:0;font-size:14px;color:#F2B8A8}
+button,.btn{font:inherit;font-weight:500;letter-spacing:.04em;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:12px 22px;border-radius:999px;border:1px solid var(--gold);cursor:pointer;text-decoration:none}
+.primary{background:var(--gold);color:#2A0A12}
+.ghost{background:transparent;color:var(--ink)}
+.done{display:flex;flex-direction:column;gap:20px;background:var(--panel);border:1px solid var(--gold);border-radius:12px;padding:28px clamp(18px,5vw,28px)}
+.summary{margin:0;white-space:pre-line;font-family:var(--display);font-size:21px;line-height:1.35}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.actions > *{flex:1 1 200px}
+footer{font-size:13px;color:var(--muted);text-align:center}
+@media (prefers-reduced-motion:no-preference){.done{animation:rise .5s ease-out}@keyframes rise{from{transform:translateY(8px)}to{transform:none}}}
+</style>
+
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Bir davet · Tek kişilik</p>
+    <h1>Trakya'da bir <em>bağ kaçamağı</em></h1>
+    <p class="sub">Lüleburgaz · Kırklareli — 2 gün, 1 gece</p>
+    <p class="for">Bu sana özel. TTA'dan.</p>
+  </header>
+
+  <section aria-labelledby="plan-h">
+    <h2 id="plan-h">Plan</h2>
+    <ol class="plan">
+      <li><span class="when">1. gün</span><span class="what">Bağ gezisi<small>Asmaların arasında bir tur, ardından iki kadeh şarap.</small></span></li>
+      <li><span class="when">Akşam</span><span class="what">Akşam yemeği<small>Konaklanacak otelde, sakin ve özenli bir sofra.</small></span></li>
+      <li><span class="when">Gece</span><span class="what">Dinlenme<small>Şehirden uzak, deliksiz bir uyku.</small></span></li>
+      <li><span class="when">2. gün</span><span class="what">Bağ yürüyüşü<small>Bölgenin bağlarında son bir tur, sonra dönüş.</small></span></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="form-h">
+    <h2 id="form-h">Tarihini seç</h2>
+    <form id="rsvp" novalidate>
+      <fieldset>
+        <legend>Katılım</legend>
+        <div class="choice">
+          <label><input type="radio" name="katilim" id="k-evet" value="evet" checked> Geliyorum</label>
+          <label><input type="radio" name="katilim" id="k-sonra" value="sonra"> Tarihi konuşalım</label>
+        </div>
+      </fieldset>
+      <div class="field">
+        <label class="lbl" for="t1">Tercih ettiğin tarih</label>
+        <input type="date" id="t1" name="t1" min="2026-11-01" max="2027-01-31">
+      </div>
+      <div class="field">
+        <label class="lbl" for="t2">Alternatif tarih (isteğe bağlı)</label>
+        <input type="date" id="t2" name="t2" min="2026-11-01" max="2027-01-31">
+      </div>
+      <p class="hint">Kupon 3 ay geçerli: 31 Ocak 2027'ye kadar bir tarih seçebilirsin.</p>
+      <div class="field">
+        <label class="lbl" for="not">Notun (isteğe bağlı)</label>
+        <textarea id="not" name="not" placeholder="Örneğin: cuma çıkış olursa daha rahat ederim."></textarea>
+      </div>
+      <p class="err" id="err" hidden></p>
+      <button type="submit" class="primary" id="gonder">Cevabımı hazırla</button>
+    </form>
+
+    <div class="done" id="done" hidden>
+      <p class="eyebrow">Cevabın hazır</p>
+      <p class="summary" id="summary"></p>
+      <div class="actions">
+        <a class="btn primary" id="wa" href="https://wa.me/905324871987" target="_blank" rel="noopener">TTA'ya WhatsApp'tan gönder</a>
+        <button type="button" class="ghost" id="kopyala">Metni kopyala</button>
+      </div>
+      <p class="hint" id="kopyaDurum" aria-live="polite"></p>
+      <button type="button" class="ghost" id="duzenle">Düzenle</button>
+    </div>
+  </section>
+
+  <footer>Kupon Nº 001 · Geçerlilik 3 ay</footer>
+</div>
+
+<script>
+(function(){
+  var form=document.getElementById('rsvp'), done=document.getElementById('done'),
+      err=document.getElementById('err'), summary=document.getElementById('summary'),
+      wa=document.getElementById('wa'), durum=document.getElementById('kopyaDurum');
+  var aylar=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+  var gunler=['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
+  function fmt(v){ if(!v) return ''; var p=v.split('-'); var d=new Date(+p[0],+p[1]-1,+p[2]);
+    return d.getDate()+' '+aylar[d.getMonth()]+' '+d.getFullYear()+', '+gunler[d.getDay()]; }
+  var metin='';
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var k=form.querySelector('input[name=katilim]:checked').value;
+    var t1=form.t1.value, t2=form.t2.value, n=form.not.value.trim();
+    var min=form.t1.min, max=form.t1.max;
+    err.hidden=true;
+    if(k==='evet' && !t1){ err.textContent='Geliyorsan bir tarih seç.'; err.hidden=false; form.t1.focus(); return; }
+    var dis=[t1,t2].some(function(v){return v && (v<min || v>max);});
+    if(dis){ err.textContent='Tarihler 1 Kasım 2026 ile 31 Ocak 2027 arasında olmalı.'; err.hidden=false; return; }
+    var satir=['Bağ kaçamağı kuponu — İpek'];
+    satir.push(k==='evet' ? 'Geliyorum.' : 'Geliyorum, tarihi birlikte konuşalım.');
+    if(t1) satir.push('1. tercih: '+fmt(t1));
+    if(t2) satir.push('Alternatif: '+fmt(t2));
+    if(n) satir.push('Not: '+n);
+    metin=satir.join('\n');
+    summary.textContent=metin;
+    wa.href='https://wa.me/905324871987?text='+encodeURIComponent(metin);
+    durum.textContent='';
+    form.hidden=true; done.hidden=false; done.querySelector('.summary').focus && done.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  document.getElementById('duzenle').addEventListener('click',function(){ done.hidden=true; form.hidden=false; form.t1.focus(); });
+  document.getElementById('kopyala').addEventListener('click',function(){
+    function secOnly(){ var r=document.createRange(); r.selectNodeContents(summary); var s=getSelection(); s.removeAllRanges(); s.addRange(r); durum.textContent='Metni seçtim, kopyalayıp gönderebilirsin.'; }
+    try{ navigator.clipboard.writeText(metin).then(function(){ durum.textContent='Kopyalandı.'; },secOnly); }catch(x){ secOnly(); }
+  });
+})();
+</script>
+
+</body>
+</html>
